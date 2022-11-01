@@ -1,7 +1,18 @@
 import numpy as np
 
+credits = "created by Nicklas: s224218, Sophia: s224222, Jonas: s22####"
+
 def dataLoad(filename):
-    # Insert your code here
+    ##########################
+    ## Loads data from file ##
+    filein = open(filename, "r")
+    lines = filein.readlines()
+    normalText = "".join(lines)
+    
+    ##########################
+
+    print(normalText)
+
     return np.ones((3,4))
 
 def dataStatistics(data, statistics):
@@ -13,5 +24,11 @@ def dataPlot(data):
     return
 
 def main():
-    # Insert your code here
+    # initialization of program
+    print("\n" + credits + "\n\n\n" + "This program is a part of the 'Bakterie-dataanalyse' project.\n")
+    input("############################\n" + "Press Enter to continue...\n" + "############################")
+    print("Cool")
+
     return
+
+main()
