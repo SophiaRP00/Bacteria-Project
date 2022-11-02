@@ -27,8 +27,11 @@ def main():
     # initialization of program
     print("\n" + credits + "\n\n\n" + "This program is a part of the 'Bakterie-dataanalyse' project.\n")
     input("############################\n" + "Press Enter to continue...\n" + "############################")
-    print("Cool")
-
+    print("\n\n")
+    print("############")
+    print("### Menu ###")
+    print("############")
+    print("\n what do you want to do?")
     return
 
 main()
