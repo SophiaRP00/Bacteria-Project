@@ -34,6 +34,8 @@ def dataStatistics(data, statistics):
 
 def dataPlot(data):
     # Insert your code here
+    #Plot 1 -'Number of Bacteria - BAR PLOT WITH DIFFERENT TEMPERATURES
+    #Plot 2 - Growth rate by temperature - X-AXIS 10-60 DEGREES AND A GRARPH FOR EACH BACTERIA
     return
 
 def main():
