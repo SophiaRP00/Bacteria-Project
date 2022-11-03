@@ -33,7 +33,24 @@ def dataLoad(filename):
     return data
 
 def dataStatistics(data, statistics):
-    # Insert your code here 
+    meanTemp = np.mean(data[:,0])
+    meanGrowth = np.mean(data[:,1])
+    stdTemp = np.std(data[:,0])
+    stdGrowth = np.std(data[:,1])
+    rows = data[:,0].size
+
+    coldData = np.array([])
+    for n in range(rows):
+        if data[n,0] < 20:
+            coldData = np.append(coldData, data[n,1])
+    coldGrowth = np.mean(coldData)
+
+    hotData = np.array([])
+    for n in range(rows):
+        if data[n,0] > 50:
+            hotData = np.append(hotData, data[n,1])
+    hotgrowth = np.mean(hotData)
+    mcgr = (data[:,0] < 20).sum()
 
     return
 
