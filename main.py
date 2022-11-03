@@ -8,7 +8,6 @@ def dataLoad(filename):
     filein = open(filename, "r")
     lines = filein.readlines()
     normalText = "".join(lines)
-    
     ##########################
 
     print(normalText)
