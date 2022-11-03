@@ -39,25 +39,40 @@ def dataStatistics(data, statistics):
 
 def dataPlot(data):
     ###############################################
-    ### First plot - NUmber of Bacteria         ###
+    ### First plot - Number of Bacteria         ###
     ### Creating values for Bar                 ###
     ### Data from filename is included as value ###
+    ### Count each time each Bacteria appears   ###
     ###############################################
-   
-    Bacteria = {'Salmonella Enterica':20, 'Bacillus Cereus':15, 'Listeria':30, 'Brochothrix Thermosphacta':35} 
-    courses = list(data.keys()) 
+
+    # Count how many times each bacteria is included
+    count = 0
+    for i in range(data.size):
+        if data[i] > 0:
+            count += 1
+
+    data = {'Salmonella Enterica':20, 'Bacillus Cereus':15, 'Listeria':30, 'Brochothrix Thermosphacta':35} 
+    bacteria = list(data.keys()) 
     values = list(data.values()) 
   
     fig = plt.figure(figsize = (10, 5))
  
     #creating the bar plot
-    plt.bar(courses, values, color ='maroon',
+    plt.bar(bacteria, values, color ='maroon',
         width = 0.4)
  
     plt.xlabel("Bacteria")
     plt.ylabel("Bacteria Value")
     plt.title("Number of Bacteria")
     plt.show()
+
+    ################################################
+    ### Second plot - Growth Rate by temperature ###
+    ### Creating values for plot                 ###
+    ### ????                                     ###
+    ################################################
+
+
     return
 
 def main():
