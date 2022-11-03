@@ -34,6 +34,9 @@ def dataLoad(filename):
     return data
 
 def dataStatistics(data, statistics):
+    return
+
+def dataPlot(data):
     # Insert your code here 
     #First plot - Number of Bacteria 
     # creating the dataset 
@@ -57,11 +60,6 @@ def dataStatistics(data, statistics):
     ### Creating values for plot                 ###
     ### ????                                     ###
     ################################################
-
-
-    return
-
-def dataPlot(data):
     # Insert your code here
     return
 
