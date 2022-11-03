@@ -10,10 +10,17 @@ def dataLoad(filename):
     normalText = "".join(lines)
     ##########################
 
-#Comment
-    print(normalText)
+    #Converting file to Matrix
+    for row in filename:
+        data = []
+        data.append([int(x) for x in row.split()])
+
+
+    print(data)
 
     return np.ones((3,4))
+
+dataLoad('test.txt')
 
 def dataStatistics(data, statistics):
     # Insert your code here
@@ -31,4 +38,4 @@ def main():
 
     return
 
-main()
+#main()
