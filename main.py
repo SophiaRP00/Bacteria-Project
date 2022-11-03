@@ -11,12 +11,6 @@ def dataLoad(filename):
     ##########################
 
     #Converting file to Matrix
-    for row in filename:
-        data = []
-        data.append([int(x) for x in row.split()])
-
-
-    print(data)
 
     return np.ones((3,4))
 
