@@ -8,9 +8,9 @@ def dataLoad(filename):
     filein = open(filename, "r")
     lines = filein.readlines()
     normalText = "".join(lines)
-    
     ##########################
 
+#Comment
     print(normalText)
 
     return np.ones((3,4))
