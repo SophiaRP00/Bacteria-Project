@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-credits = "created by Nicklas: s224218, Sophia: s224222, Jonas: s22####"
+creditsShown = False
+credits = "created by Nicklas: s224218, Sophia: s224222, Jonas: s224191"
 
 def dataLoad(filename):
     ######################################################
@@ -34,25 +35,10 @@ def dataLoad(filename):
 
 def dataStatistics(data, statistics):
     # Insert your code here 
-
-    return
-
-def dataPlot(data):
-    ###############################################
-    ### First plot - Number of Bacteria         ###
-    ### Creating values for Bar                 ###
-    ### Data from filename is included as value ###
-    ### Count each time each Bacteria appears   ###
-    ###############################################
-
-    # Count how many times each bacteria is included
-    count = 0
-    for i in range(data.size):
-        if data[i] > 0:
-            count += 1
-
-    data = {'Salmonella Enterica':20, 'Bacillus Cereus':15, 'Listeria':30, 'Brochothrix Thermosphacta':35} 
-    bacteria = list(data.keys()) 
+    #First plot - Number of Bacteria 
+    # creating the dataset 
+    Bacteria = {'Salmonella Enterica':20, 'Bacillus Cereus':15, 'Listeria':30, 'Brochothrix Thermosphacta':35} 
+    courses = list(data.keys()) 
     values = list(data.values()) 
   
     fig = plt.figure(figsize = (10, 5))
@@ -75,6 +61,10 @@ def dataPlot(data):
 
     return
 
+def dataPlot(data):
+    # Insert your code here
+    return
+
 def main():
     ########################################################
     ### initialization of program                        ###
@@ -83,20 +73,34 @@ def main():
     ########################################################
 
     print("\n" + credits + "\n\n\n" + "This program is a part of the 'Bakterie-dataanalyse' project.\n")
-    input("############################\n" + "Press Enter to continue...\n" + "############################\n")
+    input("############################\n" + "Press Enter to continue...\n" + "############################\n\n")
+
     print("############")
     print("### Menu ###")
     print("############")
-    print("\n what do you want to do? Please write a number from 1 - 5, according to your choice\n")
+    print("\nWhat do you want to do? Please write a number from 1 - 5, according to your choice\n")
     print("1. Load data from file \n")
     print("2. Filter data \n")
-    print("3. Show statistics\n")
+    print("3. Show statistics\n") #Uses the dataStatistics function
     print("4. Generate diagrams/plot data\n")
     print("5. Exit program\n")
     choice = input("Your choice: ")
     if choice == "1":
-        print("You chose to load data from file")
+        print("\nYou chose to load data from file")
+        print("Please write the name of the file you want to load data from.\nYou can write 'exit', if you want to go back to the menu\n")
+        while True:
+            try:
+                filename = input("Filename: ")
+                if filename == "exit":
+                    main()
+                data = dataLoad(filename)
+                print("Data loaded successfully! :D\nYou will now be redirected to the menu\n")
+                main()
+                break
+            except OSError:
+                print("Invalid filename, please try again")
+
 
     return
 
-#main()
+main()
