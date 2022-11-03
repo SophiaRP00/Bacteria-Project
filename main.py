@@ -3,10 +3,13 @@ import numpy as np
 credits = "created by Nicklas: s224218, Sophia: s224222, Jonas: s22####"
 
 def dataLoad(filename):
-    ####################################
-    ###  Converting file to Matrix   ###
-    ### By Jonas, Nicklas and Sophia ###   
-    ####################################
+    ######################################################
+    ### Converting file to Matrix                      ###
+    ### Using if-else loops to find line for error     ###
+    ### Writing what the error is and stacking if true ###
+    ### By Jonas, Nicklas and Sophia                   ###   
+    ######################################################
+
     tmp = np.loadtxt(filename, dtype=float)
     data = np.zeros(3)
     for n in range(tmp[:,0].size):
@@ -37,7 +40,12 @@ def dataPlot(data):
     return
 
 def main():
-    # initialization of program
+    ########################################################
+    ### initialization of program                        ###
+    ### Creating input so user can choose program        ###
+    ### User shall choose number from 1-5 to use program ###
+    ########################################################
+
     print("\n" + credits + "\n\n\n" + "This program is a part of the 'Bakterie-dataanalyse' project.\n")
     input("############################\n" + "Press Enter to continue...\n" + "############################\n")
     print("############")
