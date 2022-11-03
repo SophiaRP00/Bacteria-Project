@@ -34,23 +34,7 @@ def dataLoad(filename):
     return data
 
 def dataStatistics(data, statistics):
-    # Insert your code here 
-    #First plot - Number of Bacteria 
-    # creating the dataset 
-    Bacteria = {'Salmonella Enterica':20, 'Bacillus Cereus':15, 'Listeria':30, 'Brochothrix Thermosphacta':35} 
-    courses = list(data.keys()) 
-    values = list(data.values()) 
-  
-    fig = plt.figure(figsize = (10, 5))
- 
-    #creating the bar plot
-    plt.bar(courses, values, color ='maroon',
-        width = 0.4)
- 
-    plt.xlabel("Bacteria")
-    plt.ylabel("Bacteria Value")
-    plt.title("Number of Bacteria")
-    plt.show()
+    # Insert your code here
     return
 
 def dataPlot(data):
