@@ -2,4 +2,4 @@
 # Bacteria project thing
 #### ######################
 
-### Nicklas: s224218, Sophia: s224222, Jonas: s22####
+### Nicklas: s224218, Sophia: s224222, Jonas: s224191
