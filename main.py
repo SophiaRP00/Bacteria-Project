@@ -44,13 +44,21 @@ def dataStatistics(data, statistics):
     fig = plt.figure(figsize = (10, 5))
  
     #creating the bar plot
-    plt.bar(courses, values, color ='maroon',
+    plt.bar(bacteria, values, color ='maroon',
         width = 0.4)
  
     plt.xlabel("Bacteria")
     plt.ylabel("Bacteria Value")
     plt.title("Number of Bacteria")
     plt.show()
+
+    ################################################
+    ### Second plot - Growth Rate by temperature ###
+    ### Creating values for plot                 ###
+    ### ????                                     ###
+    ################################################
+
+
     return
 
 def dataPlot(data):
