@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 credits = "created by Nicklas: s224218, Sophia: s224222, Jonas: s22####"
 
