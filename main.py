@@ -39,8 +39,6 @@ def main():
     if choice == "1":
         print("You chose to load data from file")
 
-
-
     return
 
 main()
