@@ -38,9 +38,12 @@ def dataStatistics(data, statistics):
     return
 
 def dataPlot(data):
-    # Insert your code here
-    #First plot - NUmber of Bacteria 
-    # creating the dataset - NUMBERS NEEDS TO BE COUNTED FROM ACTUAL RAW DATA
+    ###############################################
+    ### First plot - NUmber of Bacteria         ###
+    ### Creating values for Bar                 ###
+    ### Data from filename is included as value ###
+    ###############################################
+   
     Bacteria = {'Salmonella Enterica':20, 'Bacillus Cereus':15, 'Listeria':30, 'Brochothrix Thermosphacta':35} 
     courses = list(data.keys()) 
     values = list(data.values()) 
