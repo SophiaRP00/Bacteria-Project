@@ -35,13 +35,8 @@ def dataLoad(filename):
 
 def dataStatistics(data, statistics):
     # Insert your code here 
-
-    return
-
-def dataPlot(data):
-    # Insert your code here
-    #First plot - NUmber of Bacteria 
-    # creating the dataset - NUMBERS NEEDS TO BE COUNTED FROM ACTUAL RAW DATA
+    #First plot - Number of Bacteria 
+    # creating the dataset 
     Bacteria = {'Salmonella Enterica':20, 'Bacillus Cereus':15, 'Listeria':30, 'Brochothrix Thermosphacta':35} 
     courses = list(data.keys()) 
     values = list(data.values()) 
@@ -56,6 +51,10 @@ def dataPlot(data):
     plt.ylabel("Bacteria Value")
     plt.title("Number of Bacteria")
     plt.show()
+    return
+
+def dataPlot(data):
+    # Insert your code here
     return
 
 def main():
@@ -74,7 +73,7 @@ def main():
     print("\nWhat do you want to do? Please write a number from 1 - 5, according to your choice\n")
     print("1. Load data from file \n")
     print("2. Filter data \n")
-    print("3. Show statistics\n")
+    print("3. Show statistics\n") #Uses the dataStatistics function
     print("4. Generate diagrams/plot data\n")
     print("5. Exit program\n")
     choice = input("Your choice: ")
