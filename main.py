@@ -34,51 +34,10 @@ def dataLoad(filename):
     return data
 
 def dataStatistics(data, statistics):
+    # Insert your code here 
     return
 
 def dataPlot(data):
-    ################################################
-    ### First plot - Number of Bacteria          ###
-    ### Counting how often each Bacteria appears ###
-    ### Then adding it as value in Data Plot     ###
-    ################################################
-
-    count = 0
-    Bact = np.zeroes(4)
-
-    for i in range(data.size):
-        if data[i] == 1:
-            count += 1
-        if data[i] == 2:
-            count += 1
-        if data[i] == 3:
-            count += 1
-        if data[i] == 4:
-            count += 1
-    
-    #Mangler at store det value in something
-
-  
-    Bacteria = {'Salmonella Enterica':20, 'Bacillus Cereus':15, 'Listeria':30, 'Brochothrix Thermosphacta':35} 
-    courses = list(data.keys()) 
-    values = list(data.values()) 
-  
-    fig = plt.figure(figsize = (10, 5)) 
- 
-    #creating the bar plot
-    plt.bar(bacteria, values, color ='maroon',
-        width = 0.4)
- 
-    plt.xlabel("Bacteria")
-    plt.ylabel("Bacteria Value")
-    plt.title("Number of Bacteria")
-    plt.show()
-
-    ################################################
-    ### Second plot - Growth Rate by temperature ###
-    ### Creating values for plot                 ###
-    ### ????                                     ###
-    ################################################
     # Insert your code here
     return
 
@@ -116,6 +75,8 @@ def main():
                 break
             except OSError:
                 print("Invalid filename, please try again")
+    #elif choice == "3":
+
 
 
     return
