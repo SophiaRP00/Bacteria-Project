@@ -63,7 +63,7 @@ def dataPlot(data):
     courses = list(data.keys()) 
     values = list(data.values()) 
   
-    fig = plt.figure(figsize = (10, 5))
+    fig = plt.figure(figsize = (10, 5)) 
  
     #creating the bar plot
     plt.bar(bacteria, values, color ='maroon',
