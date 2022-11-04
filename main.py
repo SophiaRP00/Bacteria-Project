@@ -81,20 +81,10 @@ def dataPlot(data):
     count = 0
     Bact = np.zeroes(4)
 
-    for i in range(data.size):
-        if data[i] == 1:
-            count += 1
-        if data[i] == 2:
-            count += 1
-        if data[i] == 3:
-            count += 1
-        if data[i] == 4:
-            count += 1
+    for i in data[:,2]:
+            Bact[i-1] += 1
     
-    #Mangler at store det value in something
-    
-    Bacteria = 0
-    Bacteria = {'Salmonella Enterica':20, 'Bacillus Cereus':15, 'Listeria':30, 'Brochothrix Thermosphacta':35} 
+    Bacteria = {'Salmonella Enterica':Bact[0], 'Bacillus Cereus':Bact[1], 'Listeria':Bact[2], 'Brochothrix Thermosphacta':Bact[3]} 
     courses = list(data.keys()) 
     values = list(data.values()) 
 
