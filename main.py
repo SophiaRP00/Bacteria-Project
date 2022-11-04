@@ -85,11 +85,11 @@ def dataPlot(data):
             Bact[i-1] += 1
     
     Bacteria = {'Salmonella Enterica':Bact[0], 'Bacillus Cereus':Bact[1], 'Listeria':Bact[2], 'Brochothrix Thermosphacta':Bact[3]} 
-    courses = list(data.keys()) 
+    c = list(data.keys()) 
     values = list(data.values()) 
 
     fig = plt.figure(figsize = (10, 5)) 
-    plt.bar(bacteria, values, color ='maroon',width=0.4)
+    plt.bar(Bacteria, values, color ='maroon',width=0.4)
     plt.xlabel("Types of Bacteria")
     plt.ylabel("Number of each Bacteria")
     plt.title("Bar Plot - Number of Bacteria")
