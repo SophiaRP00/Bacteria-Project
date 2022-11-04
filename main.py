@@ -104,8 +104,6 @@ def dataPlot(data):
     plt.ylabel("Number of each Bacteria")
     plt.title("Bar Plot - Number of Bacteria")
     plt.show()
-
-
     return
 
 def main():
