@@ -70,7 +70,40 @@ def dataStatistics(data, statistics):
     return
 
 def dataPlot(data):
-    # Plotting data
+    ################################################
+    #First plot - Number of Bacteria 
+    ### First plot - Number of Bacteria          ###
+    # creating the dataset 
+    ### Counting how often each Bacteria appears ###
+    ### Then adding it as value in Data Plot     ###
+    ################################################
+
+    count = 0
+    Bact = np.zeroes(4)
+
+    for i in range(data.size):
+        if data[i] == 1:
+            count += 1
+        if data[i] == 2:
+            count += 1
+        if data[i] == 3:
+            count += 1
+        if data[i] == 4:
+            count += 1
+    
+    #Mangler at store det value in something
+    
+    Bacteria = 0
+    Bacteria = {'Salmonella Enterica':20, 'Bacillus Cereus':15, 'Listeria':30, 'Brochothrix Thermosphacta':35} 
+    courses = list(data.keys()) 
+    values = list(data.values()) 
+
+    fig = plt.figure(figsize = (10, 5)) 
+    plt.bar(bacteria, values, color ='maroon',width=0.4)
+    plt.xlabel("Types of Bacteria")
+    plt.ylabel("Number of each Bacteria")
+    plt.title("Bar Plot - Number of Bacteria")
+    plt.show()
     return
 
 def main():
