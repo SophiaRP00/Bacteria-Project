@@ -34,11 +34,43 @@ def dataLoad(filename):
     return data
 
 def dataStatistics(data, statistics):
-    # Insert your code here 
+    
+    ###### Loop to make cold growth and hot growth ######
+    coldData = np.array([])                             #
+    hotData = np.array([])                              #
+    for n in range(rows):                               #
+        if data[n,0] < 20:                              #
+            coldData = np.append(coldData, data[n,1])   #
+        elif data[n,0] > 50:                            #
+            hotData = np.append(hotData, data[n,1])     #
+    #####################################################
+
+    meanTemp = np.mean(data[:,0])
+    meanGrowth = np.mean(data[:,1])
+    stdTemp = np.std(data[:,0])
+    stdGrowth = np.std(data[:,1])
+    rows = data[:,0].size
+    coldGrowth = np.mean(coldData)
+    hotGrowth = np.mean(hotData)
+
+    if (statistics).lower == "mean temperature":
+        return meanTemp
+    elif (statistics).lower == "mean growth rate":
+        return meanGrowth
+    elif (statistics).lower == "std temperature":
+        return stdTemp
+    elif (statistics).lower == "std growth rate":
+        return stdGrowth
+    elif (statistics).lower == "rows":
+        return rows
+    elif (statistics).lower == "mean cold growth rate":
+        return coldGrowth
+    elif (statistics).lower == "mean hot growth rate":
+        return hotGrowth
     return
 
 def dataPlot(data):
-    # Insert your code here
+    # Plotting data
     return
 
 def main():
