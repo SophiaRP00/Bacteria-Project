@@ -103,8 +103,8 @@ def dataPlot(data):
             Bact[i-1] += 1
     
     Bacteria = {'Salmonella Enterica':Bact[0], 'Bacillus Cereus':Bact[1], 'Listeria':Bact[2], 'Brochothrix Thermosphacta':Bact[3]} 
-    c = list(data.keys()) 
-    values = list(data.values()) 
+    c = list(Bacteria.keys()) 
+    values = list(Bacteria.values()) 
 
     fig = plt.figure(figsize = (10, 5)) 
     plt.bar(Bacteria, values, color ='maroon',width=0.4)
@@ -112,6 +112,42 @@ def dataPlot(data):
     plt.ylabel("Number of each Bacteria")
     plt.title("Bar Plot - Number of Bacteria")
     plt.show()
+
+    ################################################################
+    ### Second data plot - Growth rate of Bacteria               ###
+    ### Creating tx-axis with temperature as data[0] from 10-60C ###
+    ### Creating dataset                                         ###
+    ### Creating the plot where each graph gets differen colour  ###
+    ### Using Legend to make an info box about our graphs        ###
+    ################################################################
+
+    #JEG HAR FORSØGT AT LAVE DATA TIL PLOT 2. Ved ikke helt, hvad Y skal være
+    x1 = data[:,0]
+    y1 = Bact[0]
+
+    plt.plot(x1,y1, color='yellow', label = 'Salmonella Enterica')
+
+    x2 = data[:,0]
+    y2 = Bact[1]
+
+    plt.plot(x2,y2, color='red',label = 'Bacillus Cereus')
+
+    x3 = data[:,0]
+    y3 = Bact[2]
+
+    plt.plot(x3,y3, color='blue' ,label = 'Listeria') 
+
+    x4 = data[:,0]
+    y4 = Bact[3]
+
+    plt.plot(x4,y4, color='green',label = 'Brochothrix Thermosphacta')
+
+    plt.xlabel('Temperature')
+    plt.ylabel('Growth Rate')
+    plt.title('Growth Rate of Bacteria')
+    plt.legend()
+    plt.show()
+
     return
 
 def main():
