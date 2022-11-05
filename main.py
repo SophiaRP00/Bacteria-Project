@@ -71,9 +71,9 @@ def dataStatistics(data, statistics):
 
 def dataPlot(data):
     ################################################
-    #First plot - Number of Bacteria 
     ### First plot - Number of Bacteria          ###
-    # creating the dataset 
+    ### First plot - Number of Bacteria          ###
+    ### creating the dataset                     ###
     ### Counting how often each Bacteria appears ###
     ### Then adding it as value in Data Plot     ###
     ################################################
