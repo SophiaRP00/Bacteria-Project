@@ -1,10 +1,24 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-creditsShown = False
+creditsShown = 0
 credits = "created by Nicklas: s224218, Sophia: s224222, Jonas: s224191"
-filenameChoice = ""
-dataChoice = ""
+dataChoice = "2"
+
+
+def isFile():
+    print("\nYou chose to load data from file")
+    print("Please write the name of the file you want to load data from.\nYou can write 'exit', if you want to go back to the menu\n")    
+    while True:
+        try:
+            filenameChoice = input("Filename: ")
+            open(filenameChoice, "r")
+            print("File found and loaded! \nYou will now be returned to the menu")
+            return filenameChoice
+        except IOError:
+            if filenameChoice == "exit":
+                break
+            print("Invalid filename, please try again")
 
 
 def dataLoad(filename):
@@ -72,6 +86,7 @@ def dataStatistics(data, statistics):
         return hotGrowth
     return
 
+
 def dataPlot(data):
     ################################################
     #First plot - Number of Bacteria 
@@ -105,66 +120,52 @@ def main():
     ### Creating input so user can choose program        ###
     ### User shall choose number from 1-5 to use program ###
     ########################################################
+    while True:
+        print("\n--------------------------------------------")
+        print("| Welcome to the Bacteria Analysis Project |")
+        print("-------------------------------------------- \n")
+        print("############")
+        print("### Menu ###")
+        print("############")
+        print("\nWhat do you want to do? Please write a number from 1 - 5, according to your choice\n")
+        print("1. Load data from file \n")
+        print("2. Filter data \n")
+        print("3. Show statistics\n") #Uses the dataStatistics function
+        print("4. Generate diagrams/plot data\n")
+        print("5. Exit program\n")
+        choice = input("Your choice: ")
 
-    print("\n" + credits + "\n\n\n" + "This program is a part of the 'Bakterie-dataanalyse' project.\n")
-    input("############################\n" + "Press Enter to continue...\n" + "############################\n\n")
-
-    print("############")
-    print("### Menu ###")
-    print("############")
-    print("\nWhat do you want to do? Please write a number from 1 - 5, according to your choice\n")
-    print("1. Load data from file \n")
-    print("2. Filter data \n")
-    print("3. Show statistics\n") #Uses the dataStatistics function
-    print("4. Generate diagrams/plot data\n")
-    print("5. Exit program\n")
-    choice = input("Your choice: ")
-
-    if choice == "1":
-        print("\nYou chose to load data from file")
-        print("Please write the name of the file you want to load data from.\nYou can write 'exit', if you want to go back to the menu\n")
-        while True:
-            try:
-                filenameChoice = input("Filename: ")
-                if filenameChoice == "exit":
-                    main()
-                data = dataLoad(filenameChoice)
-                print("Data loaded successfully! :D\nYou will now be redirected to the menu\n")
-                main()
-                break
-            except OSError:
-                print("Invalid filename, please try again")
-    
-    elif choice == "2":
-        print(filenameChoice)
-
-    
-    elif choice == "3":
-        while True:
-            print("\nYou chose to show statistics. (You can write either the specific number or the specific text to get the statistic)\n")
-            print("These are the options you can choose from:\n")
-            print("1. Mean temperature\n")
-            print("2. Mean growth rate\n")
-            print("3. Standard deviation of temperature\n")
-            print("4. Standard deviation of growth rate\n")
-            print("5. Number of rows\n")
-            print("6. Mean cold growth rate\n")
-            print("7. Mean hot growth rate\n")
-            print("8. Exit program\n")
-            try:
-                statisticChoice = input("Your choice: ")
-                if (statisticChoice).lower == "exit program" or statisticChoice == "8":
-                    main()
-                print(dataStatistics(data, statisticChoice))
-                # print("Data loaded successfully! :D\nYou will now be redirected to the menu\n")
-                # main()
-                break
-            except OSError:
-                print("Invalid number/text :( please try again")
-
-
-
-
+        if choice == "1":
+            filenameChoice = isFile()
+        
+        elif choice == "2":
+            print("hi")
+            print(filenameChoice)
+            #dataLoad(filenameChoice)
+            
+        
+        elif choice == "3":
+            while True:
+                print("\nYou chose to show statistics. (You can write either the specific number or the specific text to get the statistic)\n")
+                print("These are the options you can choose from:\n")
+                print("1. Mean temperature\n")
+                print("2. Mean growth rate\n")
+                print("3. Standard deviation of temperature\n")
+                print("4. Standard deviation of growth rate\n")
+                print("5. Number of rows\n")
+                print("6. Mean cold growth rate\n")
+                print("7. Mean hot growth rate\n")
+                print("8. Exit program\n")
+                try:
+                    statisticChoice = input("Your choice: ")
+                    if (statisticChoice).lower == "exit program" or statisticChoice == "8":
+                        main()
+                    print(dataStatistics(data, statisticChoice))
+                    # print("Data loaded successfully! :D\nYou will now be redirected to the menu\n")
+                    # main()
+                    break
+                except OSError:
+                    print("Invalid number/text :( please try again")
     return
 
 main()
