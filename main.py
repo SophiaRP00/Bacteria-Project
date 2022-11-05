@@ -5,7 +5,6 @@ creditsShown = 0
 credits = "created by Nicklas: s224218, Sophia: s224222, Jonas: s224191"
 dataChoice = "2"
 
-
 def isFile():
     print("\nYou chose to load data from file")
     print("Please write the name of the file you want to load data from.\nYou can write 'exit', if you want to go back to the menu\n")    
@@ -19,7 +18,6 @@ def isFile():
             if filenameChoice == "exit":
                 break
             print("Invalid filename, please try again")
-
 
 def dataLoad(filename):
     ######################################################
@@ -85,7 +83,6 @@ def dataStatistics(data, statistics):
     elif (statistics).lower == "mean hot growth rate" or statistics == "7":
         return hotGrowth
     return
-
 
 def dataPlot(data):
     ################################################
