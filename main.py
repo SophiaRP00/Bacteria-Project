@@ -26,7 +26,7 @@ def dataLoad(filename):
     ### Writing what the error is and stacking if true ###
     ### By Jonas, Nicklas and Sophia                   ###   
     ######################################################
-
+    error = ""
     tmp = np.loadtxt(filename, dtype=float)
     data = np.zeros(3)
     for n in range(tmp[:,0].size):
@@ -34,18 +34,27 @@ def dataLoad(filename):
         if tmp[n,0] > 10 and tmp[n,0] < 60:
             stack = True
         else:
-            print("Invalid data on line " + str(n + 1) + ": Not in range between 10-60 (ಠ_ಠ)\n")
+            error += "Invalid data on line " + str(n + 1) + ": Not in range between 10-60 (ಠ_ಠ)\n"
         if tmp[n,1] > 0:
             stack = True
         else:
-            print("Invalid data on line " + str(n + 1) + ": Not a positive number (¬_¬)\n")
+            error += "Invalid data on line " + str(n + 1) + ": Not a positive number (¬_¬)\n"
         if tmp[n,2] >= 1 and tmp[n,2] <= 4:
             stack = True
         else:
-            print("Invalid data on line " + str(n + 1) + ": Not a valid bacteria (╯°□°）╯︵ ┻━┻\n")
+            error += "Invalid data on line " + str(n + 1) + ": Not a valid bacteria (╯°□°）╯︵ ┻━┻\n"
         if stack == True:
             data = np.vstack((data, tmp[n,:]))
     data = np.delete(data, 0, 0)
+
+    if error != "":
+        print("Errors has been found and deleted from the file: " + filename)
+        input("Press enter to see the errors\n")
+        print(error)
+        input("Press enter to return to the menu\n")
+    else:
+        print("No errors found in file: " + filename)
+        input("Press enter to return to the menu\n")
     return data
 
 def dataStatistics(data, statistics):
@@ -172,9 +181,13 @@ def main():
             filenameChoice = isFile()
         
         elif choice == "2":
-            print("hi")
-            print(filenameChoice)
-            #dataLoad(filenameChoice)
+            print("You have chosen to filter data")
+            try:
+                filteredData = dataLoad(filenameChoice)
+            except UnboundLocalError:
+                print("Error: You have to load data first")
+                input("Press enter to return to the menu\n")
+            
             
         
         elif choice == "3":
@@ -193,7 +206,7 @@ def main():
                     statisticChoice = input("Your choice: ")
                     if (statisticChoice).lower == "exit program" or statisticChoice == "8":
                         main()
-                    print(dataStatistics(data, statisticChoice))
+                    #print(dataStatistics(data, statisticChoice))
                     # print("Data loaded successfully! :D\nYou will now be redirected to the menu\n")
                     # main()
                     break
