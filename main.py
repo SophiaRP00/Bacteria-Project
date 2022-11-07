@@ -5,64 +5,111 @@ creditsShown = 0
 credits = "created by Nicklas: s224218, Sophia: s224222, Jonas: s224191"
 dataChoice = "2"
 
-def isFile():
-    print("\nYou chose to load data from file")
-    print("Please write the name of the file you want to load data from.\nYou can write 'exit', if you want to go back to the menu\n")    
-    while True:
-        try:
-            filenameChoice = input("Filename: ")
-            open(filenameChoice, "r")
-            print("File found and loaded! \nYou will now be returned to the menu")
-            return filenameChoice
-        except IOError:
-            if filenameChoice == "exit":
-                break
-            print("Invalid filename, please try again")
-
-def dataLoad(filename):
+def dataLoad():
     ######################################################
     ### Converting file to Matrix                      ###
     ### Using if-else loops to find line for error     ###
     ### Writing what the error is and stacking if true ###
     ### By Jonas, Nicklas and Sophia                   ###   
     ######################################################
+    print("\nYou chose to load data from file")
+    print("Please write the name of the file you want to load data from.\nYou can write 'exit', if you want to go back to the menu\n")    
+    while True:
+        try:
+            filenameChoice = input("Filename: ")
+            open(filenameChoice, "r")
+            break
+        except IOError:
+            if filenameChoice == "exit":
+                break
+                # break
+            print("Invalid filename, please try again")
+    print("File found and loaded!")
     error = ""
-    tmp = np.loadtxt(filename, dtype=float)
+    tmp = np.loadtxt(filenameChoice, dtype=float)
     data = np.zeros(3)
     for n in range(tmp[:,0].size):
-        stack = False
-        if tmp[n,0] > 10 and tmp[n,0] < 60:
-            stack = True
-        else:
-            error += "Invalid data on line " + str(n + 1) + ": Not in range between 10-60 (ಠ_ಠ)\n"
-        if tmp[n,1] > 0:
-            stack = True
-        else:
-            error += "Invalid data on line " + str(n + 1) + ": Not a positive number (¬_¬)\n"
-        if tmp[n,2] >= 1 and tmp[n,2] <= 4:
-            stack = True
-        else:
+        valid = True
+        if tmp[n,0] <= 10 or tmp[n,0] >= 60:
+            error += "Invalid data on line " + str(n + 1) + ": Temperature not in range between 10-60 (ಠ_ಠ)\n"
+            valid = False
+        if tmp[n,1] <= 0:
+            error += "Invalid data on line " + str(n + 1) + ": Growth rate is not a positive number (¬_¬)\n"
+            valid = False
+        if tmp[n,2] < 1 or tmp[n,2] > 4:
             error += "Invalid data on line " + str(n + 1) + ": Not a valid bacteria (╯°□°）╯︵ ┻━┻\n"
-        if stack == True:
+            valid = False
+
+        if valid == True:
             data = np.vstack((data, tmp[n,:]))
+            
     data = np.delete(data, 0, 0)
 
     if error != "":
-        print("Errors has been found and deleted from the file: " + filename)
-        input("Press enter to see the errors\n")
+        print("Errors has been found and deleted from the file: " + filenameChoice)
+        input("Press enter To see the errors\n")
         print(error)
         input("Press enter to return to the menu\n")
     else:
-        print("No errors found in file: " + filename)
+        print("No errors found in file: " + filenameChoice)
         input("Press enter to return to the menu\n")
     return data
 
+def dataFilter(data):
+    print("You can choose the following types of filtering:\n")
+    print("1. Bacteria filter\n")
+    print("2. Growth rate filter\n")
+    print("You can write 'exit', if you want to go back to the menu\n")
+    while True:
+        filterChoice = input("Your choice: ")
+        if filterChoice == "1":
+            print("You chose to filter by bacteria\n")
+            print("You can choose the following types of bacteria:\n")
+            print("1. Salmonella enterica\n")
+            print("2. Bacillus cereus\n")
+            print("3. Listeria\n")
+            print("4. Brochothrix thermosphacta\n")
+            while True:
+                try:
+                    bacteriaChoice = int(input("Please write the number of the bacteria you want to filter.\nYour choice: "))
+                    if bacteriaChoice >= 1 and bacteriaChoice <= 4:
+                        break
+                    else:
+                        print("Invalid number, please try again")
+                except ValueError:
+                    print("Invalid input, please try again")
+            data = data[data[:,2] == bacteriaChoice]
+            print("Bacteria filter has been applied")
+            input("Press enter to return to the menu\n")
+            return data
+        elif filterChoice == "2":
+            print("You chose to filter by growth rate\n")
+            while True:
+                try:
+                    growthRateChoice = float(input("Please write the growth rate you want to filter.\nYour choice: "))
+                    if growthRateChoice >= 0:
+                        break
+                    else:
+                        print("Invalid number, please try again")
+                except ValueError:
+                    print("Invalid input, please try again")
+            data = data[data[:,1] == growthRateChoice]
+            print("Growth rate filter has been applied")
+            input("Press enter to return to the menu\n")
+            return data
+        elif filterChoice == "exit":
+            break
+        if filterChoice != "1" or filterChoice != "2" or filterChoice != "exit":
+            print("Invalid input, please try again")
+
+
+
 def dataStatistics(data, statistics):
-    
+    print(data)
     ###### Loop to make cold growth and hot growth ######
     coldData = np.array([])                             #
     hotData = np.array([])                              #
-    for n in range(rows):                               #
+    for n in range(data[:,0].size):                     #
         if data[n,0] < 20:                              #
             coldData = np.append(coldData, data[n,1])   #
         elif data[n,0] > 50:                            #
@@ -178,18 +225,17 @@ def main():
         choice = input("Your choice: ")
 
         if choice == "1":
-            filenameChoice = isFile()
-        
+            filenameChoice = dataLoad()
+
         elif choice == "2":
             print("You have chosen to filter data")
             try:
-                filteredData = dataLoad(filenameChoice)
+                filenameChoice = dataFilter(filenameChoice)
+                print(filenameChoice)
             except UnboundLocalError:
                 print("Error: You have to load data first")
                 input("Press enter to return to the menu\n")
             
-            
-        
         elif choice == "3":
             while True:
                 print("\nYou chose to show statistics. (You can write either the specific number or the specific text to get the statistic)\n")
@@ -205,8 +251,8 @@ def main():
                 try:
                     statisticChoice = input("Your choice: ")
                     if (statisticChoice).lower == "exit program" or statisticChoice == "8":
-                        main()
-                    #print(dataStatistics(data, statisticChoice))
+                        break
+                    dataStatistics(filenameChoice, statisticChoice)
                     # print("Data loaded successfully! :D\nYou will now be redirected to the menu\n")
                     # main()
                     break
