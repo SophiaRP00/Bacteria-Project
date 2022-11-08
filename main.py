@@ -12,7 +12,6 @@ def dataLoad():
     ### Writing what the error is and stacking if true ###
     ### By Jonas, Nicklas and Sophia                   ###   
     ######################################################
-    print("\nYou chose to load data from file")
     print("Please write the name of the file you want to load data from.\nYou can write 'exit', if you want to go back to the menu\n")    
     while True:
         try:
@@ -102,10 +101,7 @@ def dataFilter(data):
         if filterChoice != "1" or filterChoice != "2" or filterChoice != "exit":
             print("Invalid input, please try again")
 
-
-
 def dataStatistics(data, statistics):
-    print(data)
     ###### Loop to make cold growth and hot growth ######
     coldData = np.array([])                             #
     hotData = np.array([])                              #
@@ -124,21 +120,25 @@ def dataStatistics(data, statistics):
     coldGrowth = np.mean(coldData)
     hotGrowth = np.mean(hotData)
 
+    showed = 0
+
     if (statistics).lower == "mean temperature" or statistics == "1":
-        return meanTemp
+        showed = "\nMean temperature:\n" + str(meanTemp)
     elif (statistics).lower == "mean growth rate" or statistics == "2":
-        return meanGrowth
+        showed = "\nMean growth rate:\n" + str(meanGrowth)
     elif (statistics).lower == "std temperature" or statistics == "3":
-        return stdTemp
+        showed = "\nStandard deviation temperature:\n" + str(stdTemp)
     elif (statistics).lower == "std growth rate" or statistics == "4":
-        return stdGrowth
+        showed = "\nStandard deviation of growth rate:\n" + str(stdGrowth)
     elif (statistics).lower == "rows" or statistics == "5":
-        return rows
+        showed = "\nNumber of rows:\n" + str(rows)
     elif (statistics).lower == "mean cold growth rate" or statistics == "6":
-        return coldGrowth
+        showed = "\nMean cold growth rate:\n" + str(coldGrowth)
     elif (statistics).lower == "mean hot growth rate" or statistics == "7":
-        return hotGrowth
-    return
+        showed = "\nMean hot growth rate:\n" + str(hotGrowth)
+    print(showed)
+    input("\nPress enter to continue\n")
+    print("Please write a number corresponding to your choice")
 
 def dataPlot(data):
     ################################################
@@ -225,6 +225,7 @@ def main():
         choice = input("Your choice: ")
 
         if choice == "1":
+            print("\nYou chose to load data from file")
             filenameChoice = dataLoad()
 
         elif choice == "2":
@@ -237,27 +238,54 @@ def main():
                 input("Press enter to return to the menu\n")
             
         elif choice == "3":
+            print("\nYou chose to show statistics. (Write the number corresponding to your choice)\n")
+            print("These are the options you can choose from:\n")
+            print("1. Mean temperature\n")
+            print("2. Mean growth rate\n")
+            print("3. Standard deviation of temperature\n")
+            print("4. Standard deviation of growth rate\n")
+            print("5. Number of rows\n")
+            print("6. Mean cold growth rate\n")
+            print("7. Mean hot growth rate\n")
+            print("8. Return to menu\n")
             while True:
-                print("\nYou chose to show statistics. (You can write either the specific number or the specific text to get the statistic)\n")
-                print("These are the options you can choose from:\n")
-                print("1. Mean temperature\n")
-                print("2. Mean growth rate\n")
-                print("3. Standard deviation of temperature\n")
-                print("4. Standard deviation of growth rate\n")
-                print("5. Number of rows\n")
-                print("6. Mean cold growth rate\n")
-                print("7. Mean hot growth rate\n")
-                print("8. Exit program\n")
+                statisticChoice = input("Your choice: ")
                 try:
-                    statisticChoice = input("Your choice: ")
-                    if (statisticChoice).lower == "exit program" or statisticChoice == "8":
+                    if int(statisticChoice) > 0 and int(statisticChoice) < 8:
+                        try:
+                            dataStatistics(filenameChoice, statisticChoice)
+                        except UnboundLocalError:
+                            print("Error: You have to load data first")
+                            input("Press enter to return to the menu")
+                            break
+                    elif int(statisticChoice) == 8:
                         break
-                    dataStatistics(filenameChoice, statisticChoice)
-                    # print("Data loaded successfully! :D\nYou will now be redirected to the menu\n")
-                    # main()
-                    break
-                except OSError:
-                    print("Invalid number/text :( please try again")
+                    else:
+                        print("Error: You have to write a number from 1 - 8")
+                except ValueError:
+                    print("You have to write a non-decimal number")     
+        elif choice == "5":
+            if input("Are you sure you want to leave? [y/n]\n") == "y":
+                print("                         ⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                 ")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣶⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⠿⠟⠛⠻⣿⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣆⣀⣀⠀⣿⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠻⣿⣿⣿⠅⠛⠋⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢼⣿⣿⣿⣃⠠⠀⠀⠀⠀⠀⠀(goodbyyye) ")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣟⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣛⣛⣫⡄⠀⢸⣦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣾⡆⠸⣿⣿⣿⡷⠂⠨⣿⣿⣿⣿⣶⣦⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣾⣿⣿⣿⣿⡇⢀⣿⡿⠋⠁⢀⡶⠪⣉⢸⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⡏⢸⣿⣷⣿⣿⣷⣦⡙⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿⣿⣿⣇⢸⣿⣿⣿⣿⣿⣷⣦⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀")
+                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣵⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⡁⠀⠀⠀⠀⠀⠀⠀⠀")
+                break
     return
 
 main()
+
