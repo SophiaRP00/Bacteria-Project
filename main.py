@@ -67,6 +67,7 @@ def dataFilter(data):
             print("2. Bacillus cereus\n")
             print("3. Listeria\n")
             print("4. Brochothrix thermosphacta\n")
+            bacterias = np.array([[1, "Salmonella enterica"], [2, "Bacillus cereus"], [3, "Listeria"], [4, "Brochothrix thermosphacta"]])
             while True:
                 try:
                     bacteriaChoice = int(input("Please write the number of the bacteria you want to filter.\nYour choice: "))
@@ -77,35 +78,37 @@ def dataFilter(data):
                 except ValueError:
                     print("Invalid input, please try again")
             data = data[data[:,2] == bacteriaChoice]
+            filter = "bacteria: " + bacterias[bacteriaChoice - 1, 1]
             print("Bacteria filter has been applied")
             input("Press enter to return to the menu\n")
-            return data
+            return data, filter
         elif filterChoice == "2":
             print("You chose to filter by growth rate\n")
             while True:
                 try:
                     print("Please write the growth rate interval you want to filter.")
-                    growthRateChoice = float(input("\nLower bound: "))
-                    if growthRateChoice >= 0:
+                    growthRateChoiceLower = float(input("\nLower bound: "))
+                    if growthRateChoiceLower >= 0:
                         break
                     else:
                         print("Invalid number, please try again")
                 except ValueError:
                     print("Invalid input, please try again")
-            dataLower = data[data[:,1] >= growthRateChoice]
+            dataLower = data[data[:,1] >= growthRateChoiceLower]
             while True:
                 try:
-                    growthRateChoice = float(input("\nUpper bound: "))
-                    if growthRateChoice >= 0:
+                    growthRateChoiceUpper = float(input("\nUpper bound: "))
+                    if growthRateChoiceUpper >= 0 and growthRateChoiceUpper >= growthRateChoiceLower:
                         break
                     else:
                         print("Invalid number, please try again")
                 except ValueError:
                     print("Invalid input, please try again")
-            data = dataLower[dataLower[:,1] <= growthRateChoice]
+            data = dataLower[dataLower[:,1] <= growthRateChoiceUpper]
+            filter = "growth rate: " + str(growthRateChoiceLower) + " - " + str(growthRateChoiceUpper)
             print("Growth rate filter has been applied")
             input("Press enter to return to the menu\n")
-            return data
+            return data, filter
         elif filterChoice == "exit":
             break
         if filterChoice != "1" or filterChoice != "2" or filterChoice != "exit":
@@ -131,7 +134,6 @@ def dataStatistics(data, statistics):
     hotGrowth = np.mean(hotData)
 
     showed = 0
-
     if (statistics).lower == "mean temperature" or statistics == "1":
         showed = "\nMean temperature:\n" + str(meanTemp)
     elif (statistics).lower == "mean growth rate" or statistics == "2":
@@ -147,7 +149,6 @@ def dataStatistics(data, statistics):
     elif (statistics).lower == "mean hot growth rate" or statistics == "7":
         showed = "\nMean hot growth rate:\n" + str(hotGrowth)
     print(showed)
-    input("\nPress enter to continue\n")
     print("Please write a number corresponding to your choice")
 
 def dataPlot(data):
@@ -229,6 +230,7 @@ def dataPlot(data):
 # dataPlot(data)
 
 def main():
+    filter = ""
     ########################################################
     ### initialization of program                        ###
     ### Creating input so user can choose program        ###
@@ -238,15 +240,20 @@ def main():
         print("\n--------------------------------------------")
         print("| Welcome to the Bacteria Analysis Project |")
         print("-------------------------------------------- \n")
-        print("############")
-        print("### Menu ###")
-        print("############")
+        print("    ############")
+        print("    ### Menu ###")
+        print("    ############")
         print("\nWhat do you want to do?\nPlease write a number from 1 - 5, according to your choice\n")
+        if filter != "":
+            print("------------------" + (len(filter) * "-") + "--")
+            print("| Applied filter: " + filter + " |")
+            print("------------------" + (len(filter) * "-" + "--\n"))
         print("1. Load data from file \n")
         print("2. Filter data \n")
-        print("3. Show statistics\n") #Uses the dataStatistics function
+        print("3. Show statistics\n")
         print("4. Generate diagrams/plot data\n")
-        print("5. Exit program\n")
+        print("5. Reset filter\n")
+        print("6. Exit program\n")
         choice = input("Your choice: ")
 
         #################
@@ -263,7 +270,7 @@ def main():
         elif choice == "2":
             print("You have chosen to filter data")
             try:
-                loadedData = dataFilter(loadedData)
+                loadedData, filter = dataFilter(loadedData)
             except UnboundLocalError:
                 print("ERROR: You have to load data first")
                 input("Press enter to return to the menu\n")
@@ -309,13 +316,27 @@ def main():
             except UnboundLocalError:
                 print("Error: You have to load data first")
                 input("Press enter to return to the menu\n")
+        
+        ###########################
+        ### Reset filtered data ###
+        ###########################
+        elif choice == "5":
+            print("You chose to reset filter")
+            try:
+                loadedData = originalData
+                filter = ""
+                input("Filter has been reset. Press enter to return to the menu\n")
+            except UnboundLocalError:
+                print("Error: You have to load data first")
+                input("Press enter to return to the menu\n")
 
         ###################
         ### Exit program ###
         ###################
-        elif choice == "5":
+        elif choice == "6":
             if input("Are you sure you want to leave? [y/n]\n") == "y":
                 print("Thank you for using the Bacteria Analysis Project")
+                print(credits)
                 print("                         ⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                 ")
                 print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣶⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ")
                 print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⠿⠟⠛⠻⣿⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀")
@@ -338,5 +359,3 @@ def main():
     return
 
 main()
-
-
