@@ -7,7 +7,7 @@ dataChoice = "2"
 
 def dataLoad():
     ######################################################
-    ### Converting file to Matrix                      ###
+    ### Converting file to Matrix and erasing errors   ###
     ### Using if-else loops to find line for error     ###
     ### Writing what the error is and stacking if true ###
     ### By Jonas, Nicklas and Sophia                   ###   
@@ -16,12 +16,11 @@ def dataLoad():
     while True:
         try:
             filenameChoice = input("Filename: ")
+            if filenameChoice == "exit":
+                return
             open(filenameChoice, "r")
             break
         except IOError:
-            if filenameChoice == "exit":
-                break
-                # break
             print("Invalid filename, please try again")
     print("File found and loaded!")
     error = ""
@@ -85,14 +84,25 @@ def dataFilter(data):
             print("You chose to filter by growth rate\n")
             while True:
                 try:
-                    growthRateChoice = float(input("Please write the growth rate you want to filter.\nYour choice: "))
+                    print("Please write the growth rate interval you want to filter.")
+                    growthRateChoice = float(input("\nLower bound: "))
                     if growthRateChoice >= 0:
                         break
                     else:
                         print("Invalid number, please try again")
                 except ValueError:
                     print("Invalid input, please try again")
-            data = data[data[:,1] == growthRateChoice]
+            dataLower = data[data[:,1] >= growthRateChoice]
+            while True:
+                try:
+                    growthRateChoice = float(input("\nUpper bound: "))
+                    if growthRateChoice >= 0:
+                        break
+                    else:
+                        print("Invalid number, please try again")
+                except ValueError:
+                    print("Invalid input, please try again")
+            data = dataLower[dataLower[:,1] <= growthRateChoice]
             print("Growth rate filter has been applied")
             input("Press enter to return to the menu\n")
             return data
@@ -148,60 +158,75 @@ def dataPlot(data):
     ### Counting how often each Bacteria appears ###
     ### Then adding it as value in Data Plot     ###
     ################################################
-
-    count = 0
-    Bact = np.zeroes(4)
-
-    for i in data[:,2]:
-            Bact[i-1] += 1
     
-    Bacteria = {'Salmonella Enterica':Bact[0], 'Bacillus Cereus':Bact[1], 'Listeria':Bact[2], 'Brochothrix Thermosphacta':Bact[3]} 
-    c = list(Bacteria.keys()) 
-    values = list(Bacteria.values()) 
-
-    fig = plt.figure(figsize = (10, 5)) 
-    plt.bar(Bacteria, values, color ='maroon',width=0.4)
-    plt.xlabel("Types of Bacteria")
-    plt.ylabel("Number of each Bacteria")
+    bacteria = np.zeros(4)
+    for n in range(data[:,0].size):
+        bacteria[int(data[n,2])-1] += 1
+        print(bacteria)
+    
+    x = np.array(["Salmonella enterica", "Bacillus cereus", "Listeria", "Brochothrix thermosphacta"])#bacteriaPlot[:,0]
+    y = np.array([bacteria[0], bacteria[1], bacteria[2], bacteria[3]])
+    plt.bar(x, y, color = 'maroon', width = 0.5)
     plt.title("Bar Plot - Number of Bacteria")
+    plt.xlabel("Bacteria")
+    plt.ylabel("Number of Bacteria")
     plt.show()
 
-    ################################################################
-    ### Second data plot - Growth rate of Bacteria               ###
-    ### Creating tx-axis with temperature as data[0] from 10-60C ###
-    ### Creating dataset                                         ###
-    ### Creating the plot where each graph gets differen colour  ###
-    ### Using Legend to make an info box about our graphs        ###
-    ################################################################
+    # count = 0
+    # Bact = np.zeroes(4)
 
-    #JEG HAR FORSØGT AT LAVE DATA TIL PLOT 2. Ved ikke helt, hvad Y skal være
-    x1 = data[:,0]
-    y1 = Bact[0]
+    # for i in data[:,2]:
+    #         Bact[i-1] += 1
+    
+    # Bacteria = {'Salmonella Enterica':Bact[0], 'Bacillus Cereus':Bact[1], 'Listeria':Bact[2], 'Brochothrix Thermosphacta':Bact[3]} 
+    # c = list(Bacteria.keys()) 
+    # values = list(Bacteria.values()) 
 
-    plt.plot(x1,y1, color='yellow', label = 'Salmonella Enterica')
+    # fig = plt.figure(figsize = (10, 5)) 
+    # plt.bar(Bacteria, values, color ='maroon',width=0.4)
+    # plt.xlabel("Types of Bacteria")
+    # plt.ylabel("Number of each Bacteria")
+    # plt.title("Bar Plot - Number of Bacteria")
+    # plt.show()
 
-    x2 = data[:,0]
-    y2 = Bact[1]
+    # ################################################################
+    # ### Second data plot - Growth rate of Bacteria               ###
+    # ### Creating tx-axis with temperature as data[0] from 10-60C ###
+    # ### Creating dataset                                         ###
+    # ### Creating the plot where each graph gets differen colour  ###
+    # ### Using Legend to make an info box about our graphs        ###
+    # ################################################################
 
-    plt.plot(x2,y2, color='red',label = 'Bacillus Cereus')
+    # #JEG HAR FORSØGT AT LAVE DATA TIL PLOT 2. Ved ikke helt, hvad Y skal være
+    # x1 = data[:,0]
+    # y1 = Bact[0]
 
-    x3 = data[:,0]
-    y3 = Bact[2]
+    # plt.plot(x1,y1, color='yellow', label = 'Salmonella Enterica')
 
-    plt.plot(x3,y3, color='blue' ,label = 'Listeria') 
+    # x2 = data[:,0]
+    # y2 = Bact[1]
 
-    x4 = data[:,0]
-    y4 = Bact[3]
+    # plt.plot(x2,y2, color='red',label = 'Bacillus Cereus')
 
-    plt.plot(x4,y4, color='green',label = 'Brochothrix Thermosphacta')
+    # x3 = data[:,0]
+    # y3 = Bact[2]
 
-    plt.xlabel('Temperature')
-    plt.ylabel('Growth Rate')
-    plt.title('Growth Rate of Bacteria')
-    plt.legend()
-    plt.show()
+    # plt.plot(x3,y3, color='blue' ,label = 'Listeria') 
+
+    # x4 = data[:,0]
+    # y4 = Bact[3]
+
+    # plt.plot(x4,y4, color='green',label = 'Brochothrix Thermosphacta')
+
+    # plt.xlabel('Temperature')
+    # plt.ylabel('Growth Rate')
+    # plt.title('Growth Rate of Bacteria')
+    # plt.legend()
+    # plt.show()
 
     return
+# data = dataLoad()
+# dataPlot(data)
 
 def main():
     ########################################################
@@ -216,7 +241,7 @@ def main():
         print("############")
         print("### Menu ###")
         print("############")
-        print("\nWhat do you want to do? Please write a number from 1 - 5, according to your choice\n")
+        print("\nWhat do you want to do?\nPlease write a number from 1 - 5, according to your choice\n")
         print("1. Load data from file \n")
         print("2. Filter data \n")
         print("3. Show statistics\n") #Uses the dataStatistics function
@@ -224,19 +249,28 @@ def main():
         print("5. Exit program\n")
         choice = input("Your choice: ")
 
+        #################
+        ### Load data ###
+        #################
         if choice == "1":
             print("\nYou chose to load data from file")
-            filenameChoice = dataLoad()
+            loadedData = dataLoad()
+            originalData = loadedData
 
+        ##################
+        ### Filter data###
+        ##################
         elif choice == "2":
             print("You have chosen to filter data")
             try:
-                filenameChoice = dataFilter(filenameChoice)
-                print(filenameChoice)
+                loadedData = dataFilter(loadedData)
             except UnboundLocalError:
-                print("Error: You have to load data first")
+                print("ERROR: You have to load data first")
                 input("Press enter to return to the menu\n")
-            
+        
+        #######################
+        ### Show statistics ###
+        #######################
         elif choice == "3":
             print("\nYou chose to show statistics. (Write the number corresponding to your choice)\n")
             print("These are the options you can choose from:\n")
@@ -253,7 +287,7 @@ def main():
                 try:
                     if int(statisticChoice) > 0 and int(statisticChoice) < 8:
                         try:
-                            dataStatistics(filenameChoice, statisticChoice)
+                            dataStatistics(loadedData, statisticChoice)
                         except UnboundLocalError:
                             print("Error: You have to load data first")
                             input("Press enter to return to the menu")
@@ -261,11 +295,27 @@ def main():
                     elif int(statisticChoice) == 8:
                         break
                     else:
-                        print("Error: You have to write a number from 1 - 8")
+                        print("ERROR: You have to write a number from 1 - 8")
                 except ValueError:
-                    print("You have to write a non-decimal number")     
+                    print("You have to write a non-decimal number")
+        
+        ##############################
+        ### Generate diagrams/plot ###
+        ##############################
+        elif choice == "4":
+            print("You chose to generate diagrams/plot data")
+            try:
+                dataPlot(loadedData)
+            except UnboundLocalError:
+                print("Error: You have to load data first")
+                input("Press enter to return to the menu\n")
+
+        ###################
+        ### Exit program ###
+        ###################
         elif choice == "5":
             if input("Are you sure you want to leave? [y/n]\n") == "y":
+                print("Thank you for using the Bacteria Analysis Project")
                 print("                         ⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                 ")
                 print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣶⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ")
                 print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⠿⠟⠛⠻⣿⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀")
@@ -288,4 +338,5 @@ def main():
     return
 
 main()
+
 
