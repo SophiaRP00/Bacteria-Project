@@ -365,9 +365,9 @@ def main():
                 print("ERROR: You have to load data first")
                 input("Press enter to return to the menu\n")
 
-        ####################
-        ### Exit program ###
-        ####################
+        #######################
+        ### Exit program ;) ###
+        #######################
         elif choice == "6":
             if input("Are you sure you want to leave? [y/n]\n") == "y":
                 print("Thank you for using the Bacteria Analysis Project")
