@@ -3,13 +3,18 @@ import matplotlib.pyplot as plt
 
 credits = "created by Nicklas: s224218, Sophia: s224222, Jonas: s224191"
 
+            ##################################
+            ### This script was created by ###
+            ### Jonas, Nicklas and Sophia  ###
+            ##################################
+
 def dataLoad():
-    ######################################################
-    ### Converting file to Matrix and erasing errors   ###
-    ### Using if-else loops to find line for error     ###
-    ### Writing what the error is and stacking if true ###
-    ### By Jonas, Nicklas and Sophia                   ###   
-    ######################################################
+    ####################################################
+    ### Start of the function checks if file exists. ###
+    ### If it exists, load the file                  ###
+    ### Otherwise, write error message and retry     ###
+    ####################################################
+
     print("Please write the name of the file you want to load data from.\nYou can write 'exit', if you want to go back to the menu\n")    
     while True:
         try:
@@ -21,6 +26,13 @@ def dataLoad():
         except IOError:
             print("Invalid filename, please try again")
     print("File found and loaded!")
+
+    #################################################################
+    ### Converting file to Matrix and erasing errors              ###
+    ### Using if loops to find line of error                      ###
+    ### Writes the error, if no error -> stacks onto N x 3 Matrix ###  
+    #################################################################
+
     error = ""
     tmp = np.loadtxt(filenameChoice, dtype=float)
     data = np.zeros(3)
@@ -52,12 +64,25 @@ def dataLoad():
     return data
 
 def dataFilter(data):
+
+    #############################################
+    ### The user chooses a filter via input() ###
+    ### They can also write exit to go back   ###
+    #############################################
+
     print("You can choose the following types of filtering:\n")
     print("1. Bacteria filter\n")
     print("2. Growth rate filter\n")
     print("You can write 'exit', if you want to go back to the menu\n")
     while True:
         filterChoice = input("Your choice: ")
+
+        ######################################################
+        ### If the user chooses bacteria filter,           ###
+        ### They can again choose between the different    ###
+        ### types of bacteria.                             ###
+        ######################################################
+
         if filterChoice == "1":
             print("You chose to filter by bacteria\n")
             print("You can choose the following types of bacteria:\n")
@@ -65,6 +90,12 @@ def dataFilter(data):
             print("2. Bacillus cereus\n")
             print("3. Listeria\n")
             print("4. Brochothrix thermosphacta\n")
+
+            ######################################################
+            ### The user chooses a bacteria, and the function  ###
+            ### filters the dataset according to the bacteria. ###
+            ######################################################
+
             bacterias = np.array([[1, "Salmonella enterica"], [2, "Bacillus cereus"], [3, "Listeria"], [4, "Brochothrix thermosphacta"]])
             while True:
                 try:
@@ -80,6 +111,14 @@ def dataFilter(data):
             print("Bacteria filter has been applied")
             input("Press enter to return to the menu\n")
             return data, filter
+        
+        ###########################################################
+        ### If the user chooses growth rate filter,             ###
+        ### They then choose between the upper and lower bounds ###
+        ### of growth rates.                                    ###
+        ### The function filters the dataset accordingly        ###
+        ###########################################################
+
         elif filterChoice == "2":
             print("You chose to filter by growth rate\n")
             while True:
@@ -113,15 +152,18 @@ def dataFilter(data):
             print("Invalid input, please try again")
 
 def dataStatistics(data, statistics):
-    ###### Loop to make cold growth and hot growth ######
-    coldData = np.array([])                             #
-    hotData = np.array([])                              #
-    for n in range(data[:,0].size):                     #
-        if data[n,0] < 20:                              #
-            coldData = np.append(coldData, data[n,1])   #
-        elif data[n,0] > 50:                            #
-            hotData = np.append(hotData, data[n,1])     #
-    #####################################################
+
+    #####################################################################
+    ### Function starts by defining the different types of statistics ###
+    #####################################################################
+
+    coldData = np.array([])                             
+    hotData = np.array([])                              
+    for n in range(data[:,0].size):                     
+        if data[n,0] < 20:                              
+            coldData = np.append(coldData, data[n,1])   
+        elif data[n,0] > 50:                            
+            hotData = np.append(hotData, data[n,1])     
 
     meanTemp = np.mean(data[:,0])
     meanGrowth = np.mean(data[:,1])
@@ -130,6 +172,11 @@ def dataStatistics(data, statistics):
     rows = data[:,0].size
     coldGrowth = np.mean(coldData)
     hotGrowth = np.mean(hotData)
+
+    ##########################################################
+    ### According to the users choice,                     ###
+    ### the function prints the different statistics.      ###
+    ##########################################################
 
     showed = 0
     if (statistics).lower == "mean temperature" or statistics == "1":
@@ -150,13 +197,11 @@ def dataStatistics(data, statistics):
     print("\nPlease write a number corresponding to your choice")
 
 def dataPlot(data):
-    ################################################
-    ### First plot - Number of Bacteria          ###
-    ### First plot - Number of Bacteria          ###
-    ### creating the dataset                     ###
-    ### Counting how often each Bacteria appears ###
-    ### Then adding it as value in Data Plot     ###
-    ################################################
+    #########################################################
+    ### First plot - Number of Bacteria                   ###
+    ### Counts how often each Bacteria appears in dataset ###
+    ### Then plots the data regarding to each bacteria    ###
+    #########################################################
     
     bacteria = np.zeros(4)
     for n in range(data[:,0].size):
@@ -170,13 +215,13 @@ def dataPlot(data):
     plt.ylabel("Number of Bacteria")
     plt.show()
 
-    # ################################################################
-    # ### Second data plot - Growth rate of Bacteria               ###
-    # ### Creating tx-axis with temperature as data[0] from 10-60C ###
-    # ### Creating dataset                                         ###
-    # ### Creating the plot where each graph gets differen colour  ###
-    # ### Using Legend to make an info box about our graphs        ###
-    # ################################################################
+    ################################################################
+    ### Second data plot - Growth rate of Bacteria               ###
+    ### Creating x-axis with temperature between 10-60C          ###
+    ### Makes two variables for each bacteria                    ###
+    ### Appends variables with data from the chosen dataset      ###
+    ### Differentiates the plots using legend and colors         ###
+    ################################################################
 
     salmX = np.array([])
     salmY = np.array([])
@@ -229,10 +274,15 @@ def main():
         print("    ### Menu ###")
         print("    ############")
         print("\nWhat do you want to do?\nPlease write a number from 1 - 5, according to your choice\n")
+
+        ################################
+        ### Shows the applied filter ###
+        ################################
         if filter != "":
             print("------------------" + (len(filter) * "-") + "--")
             print("| Applied filter: " + filter + " |")
             print("------------------" + (len(filter) * "-" + "--\n"))
+        
         print("1. Load data from file \n")
         print("2. Filter data \n")
         print("3. Show statistics\n")
@@ -249,9 +299,9 @@ def main():
             loadedData = dataLoad()
             originalData = loadedData
 
-        ##################
-        ### Filter data###
-        ##################
+        ###################
+        ### Filter data ###
+        ###################
         elif choice == "2":
             print("You have chosen to filter data")
             try:
@@ -281,7 +331,7 @@ def main():
                         try:
                             dataStatistics(loadedData, statisticChoice)
                         except UnboundLocalError:
-                            print("Error: You have to load data first")
+                            print("ERROR: You have to load data first")
                             input("Press enter to return to the menu")
                             break
                     elif int(statisticChoice) == 8:
@@ -299,7 +349,7 @@ def main():
             try:
                 dataPlot(loadedData)
             except UnboundLocalError:
-                print("Error: You have to load data first")
+                print("ERROR: You have to load data first")
                 input("Press enter to return to the menu\n")
         
         ###########################
@@ -312,12 +362,12 @@ def main():
                 filter = ""
                 input("Filter has been reset. Press enter to return to the menu\n")
             except UnboundLocalError:
-                print("Error: You have to load data first")
+                print("ERROR: You have to load data first")
                 input("Press enter to return to the menu\n")
 
-        ###################
+        ####################
         ### Exit program ###
-        ###################
+        ####################
         elif choice == "6":
             if input("Are you sure you want to leave? [y/n]\n") == "y":
                 print("Thank you for using the Bacteria Analysis Project")
