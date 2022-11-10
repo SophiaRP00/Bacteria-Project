@@ -1,9 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-creditsShown = 0
 credits = "created by Nicklas: s224218, Sophia: s224222, Jonas: s224191"
-dataChoice = "2"
 
 def dataLoad():
     ######################################################
@@ -149,7 +147,7 @@ def dataStatistics(data, statistics):
     elif (statistics).lower == "mean hot growth rate" or statistics == "7":
         showed = "\nMean hot growth rate:\n" + str(hotGrowth)
     print(showed)
-    print("Please write a number corresponding to your choice")
+    print("\nPlease write a number corresponding to your choice")
 
 def dataPlot(data):
     ################################################
@@ -163,32 +161,14 @@ def dataPlot(data):
     bacteria = np.zeros(4)
     for n in range(data[:,0].size):
         bacteria[int(data[n,2])-1] += 1
-        print(bacteria)
     
     x = np.array(["Salmonella enterica", "Bacillus cereus", "Listeria", "Brochothrix thermosphacta"])#bacteriaPlot[:,0]
     y = np.array([bacteria[0], bacteria[1], bacteria[2], bacteria[3]])
-    plt.bar(x, y, color = 'maroon', width = 0.5)
+    plots = plt.bar(x, y, color = 'maroon', width = 0.5)
     plt.title("Bar Plot - Number of Bacteria")
     plt.xlabel("Bacteria")
     plt.ylabel("Number of Bacteria")
     plt.show()
-
-    # count = 0
-    # Bact = np.zeroes(4)
-
-    # for i in data[:,2]:
-    #         Bact[i-1] += 1
-    
-    # Bacteria = {'Salmonella Enterica':Bact[0], 'Bacillus Cereus':Bact[1], 'Listeria':Bact[2], 'Brochothrix Thermosphacta':Bact[3]} 
-    # c = list(Bacteria.keys()) 
-    # values = list(Bacteria.values()) 
-
-    # fig = plt.figure(figsize = (10, 5)) 
-    # plt.bar(Bacteria, values, color ='maroon',width=0.4)
-    # plt.xlabel("Types of Bacteria")
-    # plt.ylabel("Number of each Bacteria")
-    # plt.title("Bar Plot - Number of Bacteria")
-    # plt.show()
 
     # ################################################################
     # ### Second data plot - Growth rate of Bacteria               ###
@@ -198,36 +178,41 @@ def dataPlot(data):
     # ### Using Legend to make an info box about our graphs        ###
     # ################################################################
 
-    # #JEG HAR FORSØGT AT LAVE DATA TIL PLOT 2. Ved ikke helt, hvad Y skal være
-    # x1 = data[:,0]
-    # y1 = Bact[0]
+    salmX = np.array([])
+    salmY = np.array([])
+    bacilX = np.array([])
+    bacilY = np.array([])
+    listerX = np.array([])
+    listerY = np.array([])
+    brochoX = np.array([])
+    brochoY = np.array([])
 
-    # plt.plot(x1,y1, color='yellow', label = 'Salmonella Enterica')
+    for n in range(data[:,0].size):
+        if data[n,2] == 1:
+            salmX = np.sort(np.append(salmX, data[n,0]))
+            salmY = np.sort(np.append(salmY, data[n,1]))
+        elif data[n,2] == 2:
+            bacilX = np.sort(np.append(bacilX, data[n,0]))
+            bacilY = np.sort(np.append(bacilY, data[n,1]))
+        elif data[n,2] == 3:
+            listerX = np.sort(np.append(listerX, data[n,0]))
+            listerY = np.sort(np.append(listerY, data[n,1]))
+        elif data[n,2] == 4:
+            brochoX = np.sort(np.append(brochoX, data[n,0]))
+            brochoY = np.sort(np.append(brochoY, data[n,1]))
+    plt.plot(salmX, salmY, color = 'salmon', label = "Salmonella enterica")
+    plt.plot(bacilX, bacilY, color = 'seagreen', label = "Bacillus cereus")
+    plt.plot(listerX, listerY, color = 'orchid', label = "Listeria")
+    plt.plot(brochoX, brochoY, color = 'royalblue', label = "Brochothrix thermosphacta")
 
-    # x2 = data[:,0]
-    # y2 = Bact[1]
-
-    # plt.plot(x2,y2, color='red',label = 'Bacillus Cereus')
-
-    # x3 = data[:,0]
-    # y3 = Bact[2]
-
-    # plt.plot(x3,y3, color='blue' ,label = 'Listeria') 
-
-    # x4 = data[:,0]
-    # y4 = Bact[3]
-
-    # plt.plot(x4,y4, color='green',label = 'Brochothrix Thermosphacta')
-
-    # plt.xlabel('Temperature')
-    # plt.ylabel('Growth Rate')
-    # plt.title('Growth Rate of Bacteria')
-    # plt.legend()
-    # plt.show()
+    plt.title("Growth rate by temperature")
+    plt.xlabel("Temperature")
+    plt.ylabel("Growth rate")
+    plt.legend()
+    
+    plt.show()
 
     return
-# data = dataLoad()
-# dataPlot(data)
 
 def main():
     filter = ""
@@ -337,24 +322,23 @@ def main():
             if input("Are you sure you want to leave? [y/n]\n") == "y":
                 print("Thank you for using the Bacteria Analysis Project")
                 print(credits)
-                print("                         ⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                 ")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣶⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⠿⠟⠛⠻⣿⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣆⣀⣀⠀⣿⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠻⣿⣿⣿⠅⠛⠋⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢼⣿⣿⣿⣃⠠⠀⠀⠀⠀⠀⠀(goodbyyye) ")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣟⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣛⣛⣫⡄⠀⢸⣦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣾⡆⠸⣿⣿⣿⡷⠂⠨⣿⣿⣿⣿⣶⣦⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣾⣿⣿⣿⣿⡇⢀⣿⡿⠋⠁⢀⡶⠪⣉⢸⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⡏⢸⣿⣷⣿⣿⣷⣦⡙⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿⣿⣿⣇⢸⣿⣿⣿⣿⣿⣷⣦⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀")
-                print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣵⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⡁⠀⠀⠀⠀⠀⠀⠀⠀")
+                print('''\
+                ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠤⠒⠒⠒⠒⠠⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                ⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠞⠀⠀⠀⠀⠀⠀⠀⠘⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                ⠀⠀⠀⠀⠀⠀⠀⠀⢻⠄⢠⠔⠒⠒⠒⠒⠒⢢⡀⢸⡄⠀⠀⠀⠀⠀⠀⠀⠀
+                ⠀⠀⠀⠀⠀⠀⠀⠀⡼⠀⠇⠀⠀⠀⠀⠀⠀⠀⢳⢸⠂⠀⠀⠀⠀⠀⠀⠀⠀
+                ⠀⠀⠀⠀⠀⠀⠀⣀⣹⠞⠀⠀⠀⠀⠀⠀⠀⠀⣸⣼⠀⠀⠀⠀(goodbyee)
+                ⠀⠀⠀⠀⠀⠀⠀⠹⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                ⠀⠀⠀⠀⠀⠀⠀⠀⠙⢲⠀⠀⠀⠀⠀⠀⠀⢠⡞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⢠⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                ⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⠀⠀⠀⠀⠀⠀⢸⡧⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                ⠀⠀⠀⠀⢀⡠⠔⢚⡟⡏⠉⠙⡇⠀⠀⣠⠟⡇⠀⠉⠁⠀⠒⠠⠄⣀⠀⠀⠀
+                ⠀⣠⠔⠊⠁⠀⠀⢸⠀⡇⠀⢰⠃⣀⠜⠁⢰⠃⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⡀
+                ⡞⠀⠀⠀⠀⠀⠀⢸⣀⣇⣀⣸⣯⡁⠀⡠⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹
+                ⡇⠀⠀⠀⠀⠀⠀⠈⢹⣰⠛⡆⠀⠈⠉⢰⠃⠀⠀⠀⠀⣴⠶⡀⠀⠀⠀⠀⢸
+                ⡇⠀⠀⠀⠀⠀⠀⠀⢸⣟⠀⡇⠀⠀⠀⢸⠀⠀⠀⠀⠀⢹⠀⢇⠀⢴⣦⠀⣏
+                ⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣴⠃⠀⠀⠀⢸⡄⠀⠀⠀⠀⢈⠀⠈⣓⢻⡟⢱⡛                            
+                ''')                
                 break
     return
 
